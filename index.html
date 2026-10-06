@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Room Type Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <main class="shell">
+    <header class="hero">
+      <h1>What kind of room is this listing?</h1>
+      <p>Describe an Airbnb listing and the model tells you whether it looks like an entire home, a private room or a shared room.</p>
+    </header>
+
+    <div class="layout">
+      <form id="form" class="panel" novalidate>
+        <fieldset>
+          <legend>Location</legend>
+          <div class="row">
+            <label>Borough
+              <select id="neighbourhood_group" required></select>
+            </label>
+            <label>Neighbourhood
+              <input id="neighbourhood" list="hoods" placeholder="Start typing…" required autocomplete="off">
+              <datalist id="hoods"></datalist>
+            </label>
+          </div>
+          <div class="row">
+            <label>Latitude <input id="latitude" type="number" step="any" min="-90" max="90" required></label>
+            <label>Longitude <input id="longitude" type="number" step="any" min="-180" max="180" required></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pricing and stay</legend>
+          <label class="slide">Price per night
+            <output data-fmt="$">150</output>
+            <input id="price" type="range" min="10" max="1000" step="5" value="150">
+          </label>
+          <label class="slide">Minimum nights
+            <output>3</output>
+            <input id="minimum_nights" type="range" min="1" max="365" value="3">
+          </label>
+          <label class="slide">Days available per year
+            <output>180</output>
+            <input id="availability_365" type="range" min="0" max="365" value="180">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Reviews and host</legend>
+          <label class="slide">Total reviews
+            <output>25</output>
+            <input id="number_of_reviews" type="range" min="0" max="700" value="25">
+          </label>
+          <label class="slide">Reviews per month
+            <output>1.2</output>
+            <input id="reviews_per_month" type="range" min="0" max="20" step="0.1" value="1.2">
+          </label>
+          <label class="slide">Host's listings
+            <output>1</output>
+            <input id="calculated_host_listings_count" type="range" min="0" max="100" value="1">
+          </label>
+        </fieldset>
+
+        <button id="go" type="submit"><span>Predict room type</span></button>
+        <details class="api">
+          <summary>API address</summary>
+          <input id="api" value="http://127.0.0.1:8000" aria-label="API base URL">
+        </details>
+      </form>
+
+      <section id="result" class="panel result" aria-live="polite">
+        <div class="empty">
+          <div class="skyline" aria-hidden="true"></div>
+          <p>Fill in the listing and press <b>Predict room type</b>. Your result appears here.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
